@@ -64,6 +64,20 @@ public class UserRepository : IUserRepository
     {
         return _context.Users.FirstOrDefaultAsync(u => u.Username == username);
     }
+    public async Task UpdateLastLoginAsync(string id)
+    {
+        if (!Guid.TryParse(id, out var guidId))
+        {
+            _logger.LogError("Invalid GUID received. Id: {Id}", id);
+            return;
+        }
+        var user= await _context.Users.FindAsync(id);
 
+        if (user != null)
+        {
+            user.LastLogin =DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+        }
+    }
     // ... Add other methods here as needed
 }

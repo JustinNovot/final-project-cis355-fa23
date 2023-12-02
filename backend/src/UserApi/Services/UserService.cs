@@ -33,11 +33,11 @@ public class UserService : IUserService
 
         // check if the provided password matches the password in the database and return null if it doesn't
         if (!_passwordHasher.ValidatePassword(model.Password, user.PasswordHash, user.PasswordSalt)) return null;
-
+         // or use your preferred method to get the current time
+        await _userRepository.UpdateLastLoginAsync(user.Id.ToString());
         // authentication successful so generate jwt token
         var token = _jwtUtils.GenerateJwtToken(user);
 
-        
         // map user and token to response model with Automapper and return
         return _mapper.Map<AuthenticateResponse>(user, opts => opts.Items["Token"] = token);
     }
