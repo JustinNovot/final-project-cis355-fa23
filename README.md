@@ -1,12 +1,14 @@
-# CIS 355 Lab 2 
+# CIS 355 Final Project README File Installation
 
-## Getting Started
-
-### Initial Setup
-Before you run the application, set up the database by following these steps. This ensures everything works smoothly.
+### Setting Up the Database
+Before you are able to start on your project there are a few steps and installations that you must accomplish. 
 
 ### Prerequisites
-- Open the project in VS Code and connect to the provided Dev Container. 
+- Install VS Code
+- Install Docker 
+
+### Initial Setup 
+- Open up the VS Code and connect to the devcontainer. 
 
 ### Database Configuration
 1. **Restore Dotnet Tools**: 
@@ -18,12 +20,8 @@ Before you run the application, set up the database by following these steps. Th
 ### Running the Application
 After setting up the database, start the application using `dotnet run` or through your IDE. It will automatically create a default admin account.
 
-See the "Default Admin Account" section for more information on using this account.
-
-## Default Admin Account
-
 ### Overview
-A default admin account is created automatically on the first startup in a development environment. It's designed for immediate access to administrative features.
+Users will be provided with a default admin account that is created automatically upon development of the database. Immediate access to administrative features will be provided immediately.  
 
 ### Account Details
 - **Username**: `admin`
@@ -32,7 +30,7 @@ A default admin account is created automatically on the first startup in a devel
 - **Role**: `Admin`
 
 ### Usage
-Use this account to sign in and access administrative areas. It's fully enabled for all features and settings, ideal for setup and testing.
+A user can use this account to sign in and access administrative areas. These features and settings can create an ideal setting for setups and tests. 
 
 ### Troubleshooting
 If you can't access the application with the admin account, check if the database has been seeded correctly and look for any startup errors in the application logs.
