@@ -43,7 +43,7 @@ public partial class UserDbContext : DbContext
             entity.Property(e => e.FailedLoginAttempts).HasDefaultValueSql("0");
             entity.Property(e => e.FirstName).HasMaxLength(255);
             entity.Property(e => e.IsActive).HasDefaultValueSql("true");
-            entity.Property(e => e.LastLogin).HasColumnType("timestamp without time zone");
+            entity.Property(e => e.LastLogin).HasColumnType("timestamp with time zone");
             entity.Property(e => e.LastName).HasMaxLength(255);
             entity.Property(e => e.Role).HasMaxLength(255);
             entity.Property(e => e.Username).HasMaxLength(255);

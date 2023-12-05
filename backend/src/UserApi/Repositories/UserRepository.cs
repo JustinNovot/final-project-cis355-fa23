@@ -71,7 +71,7 @@ public class UserRepository : IUserRepository
             _logger.LogError("Invalid GUID received. Id: {Id}", id);
             return;
         }
-        var user= await _context.Users.FindAsync(id);
+        var user= await _context.Users.FindAsync(guidId);
 
         if (user != null)
         {
