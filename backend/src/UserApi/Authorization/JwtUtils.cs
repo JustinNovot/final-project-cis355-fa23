@@ -10,7 +10,7 @@ using UserApi.Helpers;
 
 public interface IJwtUtils
 {
-    public string GenerateJwtToken(User user);
+    public string GenerateJwtToken(User user, bool is2fa);
     public string? ValidateJwtToken(string token);
 }
 
@@ -26,7 +26,7 @@ public class JwtUtils : IJwtUtils
             throw new Exception("JWT secret not configured");
     }
 
-    public string GenerateJwtToken(User user)
+    public string GenerateJwtToken(User user, bool is2fa)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();

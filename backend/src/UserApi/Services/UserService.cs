@@ -42,6 +42,21 @@ public class UserService : IUserService
         return _mapper.Map<AuthenticateResponse>(user, opts => opts.Items["Token"] = token);
     }
 
+    public async Task<AuthenticateResponse?> Authenticatetwofa(AuthenticatetwofaRequest model)
+    {
+        // get user from database
+        var user = await _userRepository.GetUserByUsernameAsync("admin");
+
+        // return null if user not found
+        if (user == null) return null;
+    // compare request 2fa token to db 2fa token //
+       // authentication successful so generate jwt token
+        var token = _jwtUtils.GenerateJwtToken(user, );
+
+        // map user and token to response model with Automapper and return
+        return _mapper.Map<AuthenticateResponse>(user, opts => opts.Items["Token"] = token);
+    }
+
     public async Task<CreateUserResponse?> CreateUserAsync(CreateUserRequest userRequest)
     {
         // Hash and salt the password

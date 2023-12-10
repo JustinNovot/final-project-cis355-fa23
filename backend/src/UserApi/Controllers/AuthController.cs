@@ -27,4 +27,15 @@ public class AuthController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPost("login2fa")]
+    public async Task<IActionResult> Login2FA(AuthenticateRequest model)
+    {
+        var response = await _userService.Authenticate(model);
+
+        if (response == null)
+            return BadRequest(new { message = "Two Factor Authentication Failed" });
+
+        return Ok(response);
+    }
 }

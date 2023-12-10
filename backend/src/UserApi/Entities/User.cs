@@ -30,4 +30,6 @@ public partial class User
     public DateTime? LastLogin { get; set; }
 
     public int? FailedLoginAttempts { get; set; }
+
+    public int? TwoFactorCode { get; set; } = 123;
 }

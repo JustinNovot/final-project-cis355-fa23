@@ -41,3 +41,5 @@ typings
 # .NET compiled files
 bin
 obj
+
+core.safecrlf
