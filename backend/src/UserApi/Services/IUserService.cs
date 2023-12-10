@@ -9,4 +9,5 @@ public interface IUserService
     Task<IEnumerable<UserResponse>> GetAllAsync();
     Task<UserResponse?> GetByIdAsync(string id);
     Task<CreateUserResponse?> CreateUserAsync(CreateUserRequest user);
+    
 }

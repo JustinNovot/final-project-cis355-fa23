@@ -23,23 +23,34 @@ public class UserService : IUserService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model)
-    {
-        // get user from database
-        var user = await _userRepository.GetUserByUsernameAsync(model.Username);
-
-        // return null if user not found
-        if (user == null) return null;
-
-        // check if the provided password matches the password in the database and return null if it doesn't
-        if (!_passwordHasher.ValidatePassword(model.Password, user.PasswordHash, user.PasswordSalt)) return null;
-         // or use your preferred method to get the current time
-        await _userRepository.UpdateLastLoginAsync(user.Id.ToString());
-        // authentication successful so generate jwt token
-        var token = _jwtUtils.GenerateJwtToken(user);
-
-        // map user and token to response model with Automapper and return
-        return _mapper.Map<AuthenticateResponse>(user, opts => opts.Items["Token"] = token);
+    public async Task<AuthenticateResponse?> Authenticate(AuthenticateRequest model) 
+    {     // get user from database     
+        var user = await _userRepository.GetUserByUsernameAsync(model.Username);     
+        // return null if user not found     
+        if (user == null) return null;     
+        // Check if the user has exceeded the maximum number of failed login attempts     
+        if (user.FailedLoginAttempts >= 3)     
+        {         
+            // You may want to log this attempt or take other actions (e.g., lock the account)         
+            return null;     
+        }     
+        // check if the provided password matches the password in the database and return null if it doesn't     
+        if (!_passwordHasher.ValidatePassword(model.Password, user.PasswordHash, user.PasswordSalt))     
+        {         
+            // Increment failed login attempts in the user entity and update database         
+            user.FailedLoginAttempts++;         
+            await _userRepository.UpdateFailedLoginAttemptsAsync(user.Id, user.FailedLoginAttempts);         
+            return null;     
+        }     
+        // Reset failed login attempts upon successful login     
+        user.FailedLoginAttempts = 0;     
+        await _userRepository.UpdateFailedLoginAttemptsAsync(user.Id, 0);     
+        // or use your preferred method to get the current time     
+        await _userRepository.UpdateLastLoginAsync(user.Id.ToString());     
+        // authentication successful so generate jwt token     
+        var token = _jwtUtils.GenerateJwtToken(user);     
+        // map user and token to response model with Automapper and return     
+        return _mapper.Map<AuthenticateResponse>(user, opts => opts.Items["Token"] = token); 
     }
 
     public async Task<CreateUserResponse?> CreateUserAsync(CreateUserRequest userRequest)

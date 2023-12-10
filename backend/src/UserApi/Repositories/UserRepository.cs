@@ -80,4 +80,14 @@ public class UserRepository : IUserRepository
         }
     }
     // ... Add other methods here as needed
+    public async Task UpdateFailedLoginAttemptsAsync(Guid userId, int? attempts)     
+    {         
+        // Implement the logic to update the number of failed login attempts in the database         
+        var user = await _context.Users.FindAsync(userId);         
+        if (user != null)         
+        {             
+            user.FailedLoginAttempts = attempts;             
+            await _context.SaveChangesAsync();         
+        }     
+    }
 }
