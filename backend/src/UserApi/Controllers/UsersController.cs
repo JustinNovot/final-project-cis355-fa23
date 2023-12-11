@@ -16,6 +16,10 @@ public class UsersController : ControllerBase
     {
         _userService = userService;
     }
+/// <summary>
+    /// Gives information of all the users. This information includes id, first name, last name, username, email, role, activity, date created and last time they logged in. 
+    /// </summary>
+    /// <response code= "200">User authenticated</response>
 
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
@@ -23,13 +27,21 @@ public class UsersController : ControllerBase
         var users = await _userService.GetAllAsync();
         return Ok(users);
     }
-
+/// <summary>
+    /// Gives information of a single user. You get this information by pasting their ID into the test. This information includes id, first name, last name, username, email, role, activity, date created and last time they logged in. 
+    /// </summary>
+    /// <response code= "200">User authenticated</response>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(string id)
     {
         var user = await _userService.GetByIdAsync(id);
         return Ok(user);
     }
+/// <summary>
+/// Creates a new user. 
+/// Duplicate User<response code= "500">User authenticated</response>
+/// Creating New user<response code= "200">User authenticated</response>
+/// Missing information <response code= "400">User authenticated</response>
 
     [HttpPost]
     public async Task<IActionResult> CreateUser(CreateUserRequest newUser)

@@ -16,8 +16,15 @@ public class AuthController : ControllerBase
         _userService = userService;
     }
 
+
+    /// <summary>
+    /// Allows the user to authenticate with username and password
+    /// </summary>
+    /// <response code= "200">User authenticated</response>
+    /// <response code="400">Username or password is incorrect</response>
     [AllowAnonymous]
     [HttpPost("login")]
+    
     public async Task<IActionResult> Login(AuthenticateRequest model)
     {
         var response = await _userService.Authenticate(model);

@@ -15,7 +15,7 @@ public class ProfileController : ControllerBase
     {
         _userService = userService;
     }
-
+   
     [HttpGet]
     public Task<IActionResult> GetProfile()
     {
